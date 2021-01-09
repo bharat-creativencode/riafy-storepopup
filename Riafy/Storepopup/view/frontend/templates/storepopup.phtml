@@ -1,0 +1,31 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/** @var \Riafy\Storepopup\Block\StoreList $block */
+?>
+
+<?php if (count($block->getGroups())>1): ?>
+<div id="storepopup" class="storepopup" style="display:none">
+	<div class="switcher store switcher-store-popup" id="switcher-store-popup">
+	    <strong class="label switcher-label"><span><?= $block->escapeHtml(__('Select Store')) ?></span></strong>
+	    <div class="actions dropdown options switcher-options">
+	        <select class="dropdown switcher-dropdown" data-target="dropdown" id="dropdown-store-popup">
+				<option> -- <?php echo __('Select store'); ?> -- </option>
+	            <?php foreach ($block->getGroups() as $_group): ?>
+	                    <option <?= ($_group->getId() == $block->getCurrentGroupId()) ? 'selected="selected"' : ''; ?> data-post='<?= /* @noEscape */ $block->getTargetStorePostData($_group->getDefaultStore()) ?>'>
+	                        <?= $block->escapeHtml($_group->getName()) ?>
+	                    </option>
+	            <?php endforeach; ?>
+	        </select>
+	    </div>
+	</div>
+
+	<p>
+		<br/>
+		<?= $block->escapeHtml(__("Note: *Click on 'Proceed' to goto selected store."));?>
+	</p>
+</div>
+<?php endif; ?>
